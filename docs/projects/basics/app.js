@@ -1,43 +1,17 @@
-let experiment = 'Stroop';
-let welcomeMessage = `Welcome to our ` + experiment +
-    ` experiment! 
-This is a bit silly because I don't 
-really have to do this part but yuh!
-`
-console.log(welcomeMessage)
+let courseName = 'Programming for Psychologists';
+console.log(courseName.length); // Output: 29
 
-let trialCount = 20;
-let colors = ['red', 'green', 'blue'];
+// Output the value for courseName translated to all capital letters.
+// Expected result: PROGRAMMING FOR PSYCHOLOGISTS
+console.log(courseName.toUpperCase());
 
-alert('Welcome to the ' + experiment + ' Experiment')
+// Output the index position of the word 'Psychologists' within the string stored in courseName.
+// Expected result: 16
+console.log(courseName.indexOf("Psychologists"));
 
-trialCount = 40
+// Output the value for courseName with the word 'Programming' replaced with the word 'Coding'.
+// Expected result: "Coding for Psychologists"
+console.log(courseName.replace("Programming", "Coding"));
 
-let halfwayCount = trialCount / 2;
-console.log(halfwayCount);
-//Comments should be serving a purpose themselves not just saying what the code is doing
 
-//Another good use of comment is to remind yourself to do something
-
-//TODO: hey so turns out you can also use this
-
-//you can also use comments to leave notes at the end of line
-
-/*
-woop
-woop
-woop
- */
-console.log(experiment.charAt(0))
-
-let correct = false;
-console.log(typeof correct);
-
-console.log(10 <= 15); //true
-
-let response1 = prompt('What is 5 + 3?');
-console.log(response1);
-
-let response2 = prompt('What is 5+5');
-console.log(response2);
 
