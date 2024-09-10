@@ -34,3 +34,10 @@ let correct = false;
 console.log(typeof correct);
 
 console.log(10 <= 15); //true
+
+let response1 = prompt('What is 5 + 3?');
+console.log(response1);
+
+let response2 = prompt('What is 5+5');
+console.log(response2);
+
