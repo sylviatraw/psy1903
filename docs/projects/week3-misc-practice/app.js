@@ -13,7 +13,7 @@ if (response == answer) {
     feedback = 'You were close!';
 } else {
     feedback = 'Incorrect.';
-};
+}
 
 alert(feedback + ' The expected answer is ' + answer + ".");
 
@@ -27,3 +27,14 @@ if (age > 12 && age <= 17) {
 if (age >= 18) {
     alert('Adult');
 }
+
+let ptC_feedback = '';
+let ptC_response = prompt('Enter a whole number.');
+
+if (ptC_response % 2 == 0) {
+    ptC_feedback = 'The number you entered was even.';
+} else {
+    ptC_feedback = 'The number you entered was odd.';
+}
+
+alert(ptC_feedback);
