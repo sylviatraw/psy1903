@@ -2,7 +2,7 @@
 
 
 ## AI Prompts
-none
+none!
 
 ## Outside sites
-none
+none!
