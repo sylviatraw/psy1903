@@ -84,4 +84,4 @@ function filterNumbers(numbers, numberType) {
     }
 }
 
-console.log(filterNumbers([4, 9, 53, 71, 54, 2], 'evn'));
+console.log(filterNumbers([4, 9, 53, 71, 54, 2], 'even'));
