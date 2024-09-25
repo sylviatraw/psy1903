@@ -42,11 +42,11 @@
 
 //let namesThatStartWithA = [];
 
-//for (let name of names) {
-//   if (name.charAt(0) == 'A') {
-//       namesThatStartWithA.push(name);
-//    }
-//}
+for (let name of names) {
+    if (name.charAt(0) == 'A') {
+        namesThatStartWithA.push(name);
+    }
+}
 
 //console.log(namesThatStartWithA);
 

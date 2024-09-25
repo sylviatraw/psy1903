@@ -25,9 +25,20 @@
 
 let words = ['apple', 'banana', 'cherry', 'pear', 'grape'];
 
-function getWordLengths(words) {
-    let wordLengths = words.map(word => word.length)
-    return wordLengths
-}
+// function getWordLengths(words) {
+//     let wordLengths = words.map(word => word.length)
+//     return wordLengths
+// }
 
-console.log(getWordLengths(words));
+// console.log(getWordLengths(words));
+
+longestWord = []
+
+function getLongestWord(words) {
+    for (let word of words) {
+        if (word.length > longestWord.length) {
+            longestWord = word
+        }
+    } return longestWord
+}
+console.log(getLongestWord(words));
