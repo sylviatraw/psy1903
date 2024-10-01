@@ -18,4 +18,4 @@ for (let i = 0; i < 3; i++) {
 }
 
 // Output the resulting conditions array to make sure it is set up correctly
-console.log(conditions);
+//console.log(conditions);
