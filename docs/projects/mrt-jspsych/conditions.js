@@ -3,11 +3,12 @@
 let conditions = [];
 
 function getRandomNumber(min, max) {
-    let randomNumber = Math.floor(Math.random() * max) + min;
+    let randomNumber = Math.floor(Math.random() * ((max - min) + 1) + min);
     return randomNumber;
 };
 
 for (let i = 0; i < 3; i++) {
+
     let number1 = getRandomNumber(1, 10);
     let number2 = getRandomNumber(1, 10);
     conditions.push({
