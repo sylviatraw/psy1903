@@ -16,6 +16,24 @@ let welcomeTrial = {
 
 timeline.push(welcomeTrial);
 
+let likert_scale = [
+    "Strongly Disagree",
+    "Disagree",
+    "Neutral",
+    "Agree",
+    "Strongly Agree"
+];
+
+let questionnaire = {
+    type: jsPsychSurveyLikert,
+    questions: [
+        { prompt: "I enjoy solving math problems.", name: 'MathEnjoyment', labels: likert_scale },
+        { prompt: "I find math easy.", name: 'Easy', labels: likert_scale },
+    ],
+};
+
+timeline.push(questionnaire);
+
 //Math problems
 for (let block of conditions) {
 
@@ -28,7 +46,7 @@ for (let block of conditions) {
         <p>You are about to be given three addition problems</p>
         <p>The terms that are being summed will be between ${block.min} and ${block.max}.</p>
         <p>Please answer as quickly and as accurately as you can.</p>
-        <p>Press SPACE to begin.</p>
+        <p>Press <span class = 'key'>SPACE</span> to begin.</p>
         `,
         choices: [' '],
     };
