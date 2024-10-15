@@ -1,0 +1,17 @@
+.instruct {
+    line-height: 2;
+    width: 1000px;
+    margin: auto
+        /*you could do margin-left margin-right etc, margin auto will make it the same on all sides*/
+}
+
+.please {
+    font-size: 25px;
+}
+
+.key {
+    border: 1px solid black;
+    border-radius: 2px;
+    display: inline-block;
+    padding: 5px 10px;
+}

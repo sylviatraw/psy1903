@@ -11,10 +11,10 @@ let blocksB = [
 
 // There should be 10 words per category
 let words = {
-    LGBTQ: ['Bisexual', 'Pansexual', 'Nonbinary', 'Queerness', 'Genderqueer', 'Transgender', 'Fluidity', 'Inclusivity', 'Diversity', 'Androgynous'],
+    'LGBTQ+': ['Bisexual', 'Pansexual', 'Nonbinary', 'Queerness', 'Genderqueer', 'Transgender', 'Fluidity', 'Inclusivity', 'Diversity', 'Androgynous'],
     Cishet: ['Straight', 'Cisgendered', 'Heterosexual', 'Heteronormative', 'Cissexual', 'Hetero', 'Vanilla', 'Conformity', 'Traditional', 'Biological'],
-    MentalIllness: ['Depression', 'Anorexia', 'Schizophrenia', 'Anxiety', 'Psychosis', 'Autism', 'Bipolar Disorder', 'Panic Disorder', 'OCD', 'PTSD'],
-    PhysicalIllness: ['Pneumonia', 'Arthritis', 'Diabetes', 'Asthma', 'Migraine', 'Epilepsy', 'Leukemia', 'Meningitis', 'Influenza', 'Common Cold'],
+    'Mental illness': ['Depression', 'Anorexia', 'Schizophrenia', 'Anxiety', 'Psychosis', 'Autism', 'Bipolar Disorder', 'Panic Disorder', 'OCD', 'PTSD'],
+    'Physical illness': ['Pneumonia', 'Arthritis', 'Diabetes', 'Asthma', 'Migraine', 'Epilepsy', 'Leukemia', 'Meningitis', 'Influenza', 'Common Cold'],
 };
 
 
