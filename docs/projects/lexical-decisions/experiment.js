@@ -71,9 +71,9 @@ let resultsTrial = {
         //  ⭐ Update the following three values as appropriate ⭐
         let prefix = 'lexical-decision';
         //will be prefixed on the file name of your results, should be like name of experiment
-        let dataPipeExperimentId = 'your-experiment-id-here';
+        let dataPipeExperimentId = 'SzVuh0HavIsX';
         //this is for when we are like actually sending data to OSF
-        let forceOSFSave = false;
+        let forceOSFSave = true;
         //sometimes we can just change this to tru to export data for testing and stuff
 
         // Filter and retrieve results as CSV data

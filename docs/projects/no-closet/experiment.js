@@ -2,7 +2,6 @@
 let jsPsych = initJsPsych();
 
 // Define the timeline as an empty array where we will add all our trials
-let timeline = [];
 
 // Define a welcome screen
 // Uses the jsPsychHtmlKeyboardResponse plugin
@@ -16,7 +15,23 @@ Press the SPACE key to begin
 */
 // Use CSS and <span> to make the word “space” look like a key
 // Adds the welcome screen to the timeline
+// Initialize the jsPsych library
 
+// Define the timeline as an empty array where we will add all our trials
+let timeline = [];
+
+let welcomePage = {
+    type: jsPsychHtmlKeyboardResponse,
+    stimulus: `<h1>Welcome to our IAT </h1>
+    <p class = 'instruct'> In task 1 you will be asked to read a short story.
+    In task 2 you will be asked to categorize a series of words.
+    In task 3 you will answer a brief set of questions. 
+    Press the <span class = 'key'>SPACE</span> key to begin</p>`,
+    //space needs to look like a key
+    choices: [' ']
+};
+
+timeline.push(welcomePage);
 
 let primeOptions = [
     {
@@ -77,62 +92,171 @@ let iatWelcome = {
     choices: [' '],
 };
 
-timeline.push(iatWelcome);
+//timeline.push(iatWelcome);
+let number = 1;
 
-/*Includes the text “in this final task, you will be shown a series of words and asked to sort them into categories. Press the SPACE key to begin.”
-// Use CSS and <span> to make the word “space” look like a key
-// Add the task 3 welcome page to the timeline 
+for (let block of conditions) {
 
-//Use a for loop to iterate through each block in the conditions
-/*Start by defining the variables leftCategory and rightCategory and accessing the category in block.categories[] */
-//Define a variable count that should be set to 1 and will be used for each part
+    let leftCategory = block.categories[0];
+    let rightCategory = block.categories[1];
 
-//Define an instructions page
-//Uses jsPsychHtmlKeyboardResponse plugin
-/*Includes the instructions: 
-Part *count*
-In this part the two categories will be: *leftCategory* and *rightCategory*
-If the word you see in the middle of the screen should be sorted into the *left category* press the F key.
-If the word should be sorted into the *rightCategory* press the J key.
-Press the SPACE key to begin… 
-*/
-/*the word “space” and the letters “F” and “J” should use CSS and the span element to look like keys*/
-//Add the instructions to the timeline 
-//count++;
+    let instructionsPage = {
+        type: jsPsychHtmlKeyboardResponse,
+        stimulus: `<h1>Part ${number}</h1>
+        <p> In this part the two categories will be: ${leftCategory} and ${rightCategory}</p>
+        <p> If the word you see in the middle of the screen should be sorted into the ${leftCategory} press the F key.</p>
+        <p> If the word should be sorted into the ${rightCategory} press the J key.</p>
+        <p> Press the SPACE key to begin </p>`,
+        //the word “space” and the letters “F” and “J” should use CSS and the span element to look like keys
+        choices: [' ']
+    };
+    //timeline.push(instructionsPage);
+    number++;
+    console.log(count);
 
-//Add another for loop to iterate through block.trials 
-//Define a trial
-//Uses jsPsychKeyboardResponse plugin
-//The stimulus is the trial.word
-//The key choices are F and J 
-//reminder with left category (press F) and the right category (press J) should be in the left and right corners and above the word using css
-/*Add a data: {} with collect: true, trialType: ‘iat’, word: trial.word,              expectedCategory: trial.expectedCategory, expectedCategoryAsDisplayed: trial.expectedCategoryAsDisplayed, leftCategory: leftCategory,rightCategory: rightCategory, whichPrime: it.title */
-//This will make it so that the data for the trial is collected and add the other categories
-//Add an on_finish function
-//Includes an if statement
-//If data.response == trial.expectedResponse
-//data.correct = true
-//Else data.correct = false
-//Add the trial to the timeline 
+    //another for loop to iterate through the trials of each block
+    for (let trial of block.trials) {
 
-//Define a fixation trial
-//Uses jsPsychHtmlKeyboardResponse plugin 
-//The stimulus is a + 
-//Set the trial_duration to 250 ms
-//Set the choices to ‘NO KEY’
-//Push the fixation trial to the timeline
-/*this will repeat 36 times before moving on to the next block (change this in conditions file)*/
+        let wordTrial = {
+            type: jsPsychHtmlKeyboardResponse,
+            stimulus: `${trial.word}`,
+            choices: ['f', 'j'],
+            //reminder with left category (press F) and the right category (press J) should be in the left and right corners and above the word using css
+            data: {
+                collect: true,
+                trialType: 'iat',
+                word: trial.word,
+                expectedCategory: trial.expectedCategory,
+                expectedCategoryAsDisplayed: trial.expectedCategoryAsDisplayed,
+                leftCategory: leftCategory,
+                rightCategory: rightCategory,
+            },
+
+            on_finish: function (data) {
+                if (data.response == trial.expectedResponse) {
+                    data.correct = true;
+                } else {
+                    data.correct = false;
+                }
+            }
+        };
+        //timeline.push(wordTrial);
+
+        let fixationPage = {
+            type: jsPsychHtmlKeyboardResponse,
+            stimulus: '+',
+            trial_duration: 250,
+            choices: 'NO KEYS'
+        }
+        //timeline.push(fixationPage);
+    };
+};
+
+let likert_scale = [
+    "Strongly Disagree",
+    "Disagree",
+    "Neutral",
+    "Agree",
+    "Strongly Agree"
+];
+
+var Questions = {
+    type: jsPsychSurveyLikert,
+    questions: [
+        { prompt: "Masculinity and femininity are determined by biological factors, such as genes and hormones, before birth.", name: 'Question1', labels: likert_scale },
+        { prompt: "There are only two sexes: male and female.", name: 'Question2', labels: likert_scale },
+        { prompt: "All people are either male or female.", name: 'Question3', labels: likert_scale },
+        { prompt: "Gender is the same thing as sex.", name: 'Question4', labels: likert_scale },
+        { prompt: "Sex is complex; in fact, there might even be more than two sexes.", name: 'Question5', labels: likert_scale },
+        { prompt: "Gender is a complicated issue, and it does not always match up with biological sex.", name: 'Question6', labels: likert_scale },
+        { prompt: "People who say that there are only two legitimate genders are mistaken.", name: 'Question7', labels: likert_scale },
+        { prompt: "In intimate relationships, women and men take on roles according to gender for a reason; it is really the best way to have a successful relationship.", name: 'Question9', labels: likert_scale },
+        { prompt: "In intimate relationships, people should act only according to what is traditionally expected of their gender.", name: 'Question10', labels: likert_scale },
+        { prompt: "It is perfectly okay for people to have intimate relationships with people of the same sex.", name: 'Question11', labels: likert_scale },
+        { prompt: "The best way to raise a child is to have a mother and a father raise the child together.", name: 'Question12', labels: likert_scale },
+        { prompt: "In healthy intimate relationships, women may sometimes take on stereotypical ‘male’ roles, and men may sometimes take on stereotypical ‘female’ roles.", name: 'Question13', labels: likert_scale },
+        { prompt: "Women and men need not fall into stereotypical gender roles when in an intimate relationship.", name: 'Question14', labels: likert_scale },
+        { prompt: "People should partner with whomever they choose, regardless of sex or gender", name: 'Question15', labels: likert_scale },
+        { prompt: "There are particular ways that men should act and particular ways that women should act in relationships.", name: 'Question16', labels: likert_scale },
+    ],
+    data: {
+        collect: true,
+    }
+};
+
+//timeline.push(Questions);
 
 
+let resultsTrial = {
+    type: jsPsychHtmlKeyboardResponse,
+    choices: ['NO KEYS'],
+    async: false,
+    stimulus: `
+        <h1>Please wait...</h1>
+        <p>We are saving the results of your inputs.</p>
+        `,
+    on_start: function () {
+        //  ⭐ Update the following three values as appropriate ⭐
+        let prefix = 'the-closet';
+        let dataPipeExperimentId = 'your-experiment-id-here';
+        let forceOSFSave = false;
 
-//Define a variable named “likertScale” which includes likert scale response options
-//Define a questionnaire section
-//Uses the jsPsychSurveyLikert 
-/*Use the Preamble parameter to add the H1 “task 2 of 3” and the instructions “Please answer the following questions.”*/
-/*Define the questions parameter which contains an array of objects that have the question and sets the labels using the likertScale variable*/
-//Set data collect to true 
-//Push the questionnaire section to the timeline 
+        // Filter and retrieve results as CSV data
+        let results = jsPsych.data
+            .get()
+            .filter({ collect: true })
+            .ignore(['stimulus', 'trial_type', 'plugin_version', 'collect'])
+            .csv();
 
+        // Generate a participant ID based on the current timestamp
+        let participantId = new Date().toISOString().replace(/T/, '-').replace(/\..+/, '').replace(/:/g, '-');
+
+        // Dynamically determine if the experiment is currently running locally or on production
+        let isLocalHost = window.location.href.includes('localhost');
+
+        let destination = '/save';
+        if (!isLocalHost || forceOSFSave) {
+            destination = 'https://pipe.jspsych.org/api/data/';
+        }
+
+        // Send the results to our saving end point
+        fetch(destination, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                Accept: '*/*',
+            },
+            body: JSON.stringify({
+                experimentID: dataPipeExperimentId,
+                filename: prefix + '-' + participantId + '.csv',
+                data: results,
+            }),
+        }).then(data => {
+            console.log(data);
+            jsPsych.finishTrial();
+        })
+    }
+}
+timeline.push(resultsTrial);
+
+// Debrief
+let debriefTrial = {
+    type: jsPsychHtmlKeyboardResponse,
+    stimulus: `
+    <h1>Thank you!</h1>
+    <p>You can now close this tab.</p>
+    `,
+    choices: ['NO KEYS'],
+    on_start: function () {
+        let data = jsPsych.data
+            .get()
+            .filter({ collect: true })
+            .ignore(['stimulus', 'trial_type', 'trial_index', 'plugin_version', 'collect'])
+            .csv();
+        console.log(data);
+    }
+}
+timeline.push(debriefTrial);
 
 
 /*Next there will be a results trial which will generate a page that tells the participant to please wait while we are saving the results of their input. It will also have a spiny thing on the page. This will use the code given to us for the results trial*/
