@@ -2,22 +2,6 @@
 let jsPsych = initJsPsych();
 
 // Define the timeline as an empty array where we will add all our trials
-
-// Define a welcome screen
-// Uses the jsPsychHtmlKeyboardResponse plugin
-// Includes a welcome message with the following content: 
-/*Welcome to our IAT!
-In this experiment, you will complete the following three tasks:
-In task 1 you will be asked to read a short story.
-In task 2 you will answer a brief set of questions.
-In task 3 you will be asked to categorize a series of words. 
-Press the SPACE key to begin
-*/
-// Use CSS and <span> to make the word “space” look like a key
-// Adds the welcome screen to the timeline
-// Initialize the jsPsych library
-
-// Define the timeline as an empty array where we will add all our trials
 let timeline = [];
 
 let welcomePage = {
@@ -78,6 +62,7 @@ let primingTrial = {
     data: {
         collect: true,
         whichPrime: primer.title,
+        trialType: 'prime'
     },
 };
 
@@ -103,9 +88,9 @@ for (let block of conditions) {
     let instructionsPage = {
         type: jsPsychHtmlKeyboardResponse,
         stimulus: `<h1>Part ${number}</h1>
-        <p> In this part the two categories will be: ${leftCategory} and ${rightCategory}</p>
-        <p> If the word you see in the middle of the screen should be sorted into the ${leftCategory} press the F key.</p>
-        <p> If the word should be sorted into the ${rightCategory} press the J key.</p>
+        <p> In this part the two categories will be: <strong>${leftCategory}</strong> and <strong>${rightCategory}</strong></p>
+        <p> If the word you see in the middle of the screen should be sorted into the <strong>${leftCategory}</strong> press the <span class = 'key'>F</span> key.</p>
+        <p> If the word should be sorted into the <strong>${rightCategory}</strong> press the <span class = 'key'>J</span> key.</p>
         <p> Press the <span class = 'key'>ENTER</span> key to begin </p>`,
         //the word “space” and the letters “F” and “J” should use CSS and the span element to look like keys
         choices: ['Enter']
@@ -119,7 +104,10 @@ for (let block of conditions) {
 
         let wordTrial = {
             type: jsPsychHtmlKeyboardResponse,
-            stimulus: `<p class = 'please'>${trial.word}</p>`,
+            stimulus: `
+            <span class='category1'> <strong>${leftCategory}</strong> (press F)</span>
+            <span class='category2'> <strong>${rightCategory}</strong> (press J)</span>
+            <p class='word'>${trial.word}</p>`,
             choices: ['f', 'j'],
             //reminder with left category (press F) and the right category (press J) should be in the left and right corners and above the word using css
             data: {
@@ -144,9 +132,10 @@ for (let block of conditions) {
 
         let fixationPage = {
             type: jsPsychHtmlKeyboardResponse,
-            stimulus: '+',
+            stimulus: `<p class='word'>+</p>
+            `,
             trial_duration: 250,
-            choices: 'NO KEYS'
+            choices: ['NO KEYS'],
         }
         timeline.push(fixationPage);
     };
@@ -162,6 +151,8 @@ let likert_scale = [
 
 var Questions = {
     type: jsPsychSurveyLikert,
+    preamble: `<h1>Task 2 of 3</h1>
+    <p> Please answer the following questions.`,
     questions: [
         { prompt: "Masculinity and femininity are determined by biological factors, such as genes and hormones, before birth.", name: 'Question1', labels: likert_scale },
         { prompt: "There are only two sexes: male and female.", name: 'Question2', labels: likert_scale },
@@ -181,11 +172,11 @@ var Questions = {
     ],
     data: {
         collect: true,
+        trialType: 'questionnaire'
     }
 };
 
 timeline.push(Questions);
-
 
 let resultsTrial = {
     type: jsPsychHtmlKeyboardResponse,
@@ -197,9 +188,9 @@ let resultsTrial = {
         `,
     on_start: function () {
         //  ⭐ Update the following three values as appropriate ⭐
-        let prefix = 'the-closet';
-        let dataPipeExperimentId = 'your-experiment-id-here';
-        let forceOSFSave = false;
+        let prefix = 'no-closet';
+        let dataPipeExperimentId = 'SzVuh0HavIsX';
+        let forceOSFSave = true;
 
         // Filter and retrieve results as CSV data
         let results = jsPsych.data

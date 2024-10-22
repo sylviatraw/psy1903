@@ -20,22 +20,27 @@
 }
 
 .please {
-    font-size: 35px;
+    font-size: 25px;
 }
 
 .key {
     border: 1px solid black;
-    border-radius: 1.5px;
+    border-radius: 2px;
     display: inline-block;
-    padding: 0.5px 5px 2px;
+    padding: 5px 10px;
 }
+
+
+
 
 .category1 {
     margin-right: 100px;
+    margin-left: 100px;
 }
 
 .category2 {
     margin-left: 100px;
+    margin-right: 100px;
 }
 
 .word {
