@@ -5,13 +5,27 @@
         /*you could do margin-left margin-right etc, margin auto will make it the same on all sides*/
 }
 
-.please {
+.instructPerTask {
+    font-size: 30px;
+    line-height: 2;
+    width: 1000px;
+    margin: auto
+}
+
+.welcomeInstruct {
     font-size: 25px;
+    line-height: 2;
+    width: 1000px;
+    margin: auto
+}
+
+.please {
+    font-size: 35px;
 }
 
 .key {
     border: 1px solid black;
-    border-radius: 2px;
+    border-radius: 1.5px;
     display: inline-block;
-    padding: 5px 10px;
+    padding: 0.5px 5px 2px;
 }

@@ -25,8 +25,8 @@ let welcomePage = {
     stimulus: `<h1>Welcome to our IAT </h1>
     <p class = 'instruct'> In task 1 you will be asked to read a short story.
     In task 2 you will be asked to categorize a series of words.
-    In task 3 you will answer a brief set of questions. 
-    Press the <span class = 'key'>SPACE</span> key to begin</p>`,
+    In task 3 you will answer a brief set of questions.</p>
+    <p class = 'welcomeInstruct'>Press the <span class = 'key'>SPACE</span> key to begin</p>`,
     //space needs to look like a key
     choices: [' ']
 };
@@ -67,7 +67,7 @@ let primingTrial = {
     type: jsPsychHtmlKeyboardResponse,
     stimulus: `
         <h1>Task 1 of 3</h1>
-        <p class = 'please'> Please read the following story. When you are done, press the <span class = 'key'>SPACE</span> key to move to the next task. </p>
+        <p class = 'instructPerTask'> Please read the following story. When you are done, press the <span class = 'key'>SPACE</span> key to move to the next task. </p>
         <p> ${primer.story}
         `,
     choices: [' '],
@@ -78,21 +78,17 @@ let primingTrial = {
 };
 
 timeline.push(primingTrial);
-//this is where I stopped
-
-//Define a task 3 welcome page
-//Uses jsPsychHtmlKeyboardResponse plugin
-//Includes the H1 task 3 of 3
+//Define an IAT welcome page
 let iatWelcome = {
     type: jsPsychHtmlKeyboardResponse,
     stimulus: `<h1> Task 2 of 3</h1>
-    <p> in this final task, you will be shown a series of words and asked to sort them into categories.</p>
+    <p class= 'instructPerTask'> In this final task, you will be shown a series of words and asked to sort them into categories.</p>
     <p> Press the <span class = 'key'>SPACE</span> key to begin. </p> 
-    `,
+    `, //space needs to have key  around it 
     choices: [' '],
 };
 
-//timeline.push(iatWelcome);
+timeline.push(iatWelcome);
 let number = 1;
 
 for (let block of conditions) {
@@ -106,11 +102,11 @@ for (let block of conditions) {
         <p> In this part the two categories will be: ${leftCategory} and ${rightCategory}</p>
         <p> If the word you see in the middle of the screen should be sorted into the ${leftCategory} press the F key.</p>
         <p> If the word should be sorted into the ${rightCategory} press the J key.</p>
-        <p> Press the SPACE key to begin </p>`,
+        <p> Press the <span class = 'key'>SPACE</span> key to begin </p>`,
         //the word “space” and the letters “F” and “J” should use CSS and the span element to look like keys
         choices: [' ']
     };
-    //timeline.push(instructionsPage);
+    timeline.push(instructionsPage);
     number++;
     console.log(count);
 
@@ -119,7 +115,7 @@ for (let block of conditions) {
 
         let wordTrial = {
             type: jsPsychHtmlKeyboardResponse,
-            stimulus: `${trial.word}`,
+            stimulus: `<p class = 'please'>${trial.word}</p>`,
             choices: ['f', 'j'],
             //reminder with left category (press F) and the right category (press J) should be in the left and right corners and above the word using css
             data: {
@@ -140,7 +136,7 @@ for (let block of conditions) {
                 }
             }
         };
-        //timeline.push(wordTrial);
+        timeline.push(wordTrial);
 
         let fixationPage = {
             type: jsPsychHtmlKeyboardResponse,
@@ -148,7 +144,7 @@ for (let block of conditions) {
             trial_duration: 250,
             choices: 'NO KEYS'
         }
-        //timeline.push(fixationPage);
+        timeline.push(fixationPage);
     };
 };
 
@@ -184,7 +180,7 @@ var Questions = {
     }
 };
 
-//timeline.push(Questions);
+timeline.push(Questions);
 
 
 let resultsTrial = {
@@ -244,7 +240,7 @@ let debriefTrial = {
     type: jsPsychHtmlKeyboardResponse,
     stimulus: `
     <h1>Thank you!</h1>
-    <p>You can now close this tab.</p>
+    <p>The experiment is now complete; you can close this tab</p>
     `,
     choices: ['NO KEYS'],
     on_start: function () {
@@ -257,14 +253,6 @@ let debriefTrial = {
     }
 }
 timeline.push(debriefTrial);
-
-
-/*Next there will be a results trial which will generate a page that tells the participant to please wait while we are saving the results of their input. It will also have a spiny thing on the page. This will use the code given to us for the results trial*/
-
-//Define a debrief trial
-/*instructions will say Thank You! The experiment is now complete; you can close this tab*/
-// Choices should be NO KEY
-//Push the debrief trial to the timeline
 
 jsPsych.run(timeline);
 
