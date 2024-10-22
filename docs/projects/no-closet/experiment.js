@@ -67,10 +67,10 @@ let primingTrial = {
     type: jsPsychHtmlKeyboardResponse,
     stimulus: `
         <h1>Task 1 of 3</h1>
-        <p class = 'instructPerTask'> Please read the following story. When you are done, press the <span class = 'key'>SPACE</span> key to move to the next task. </p>
+        <p class = 'instructPerTask'> Please read the following story. When you are done, press the <span class = 'key'>ENTER</span> key to move to the next task. </p>
         <p> ${primer.story}
         `,
-    choices: [' '],
+    choices: ['Enter'],
     data: {
         collect: true,
         whichPrime: primer.title,
@@ -102,9 +102,9 @@ for (let block of conditions) {
         <p> In this part the two categories will be: ${leftCategory} and ${rightCategory}</p>
         <p> If the word you see in the middle of the screen should be sorted into the ${leftCategory} press the F key.</p>
         <p> If the word should be sorted into the ${rightCategory} press the J key.</p>
-        <p> Press the <span class = 'key'>SPACE</span> key to begin </p>`,
+        <p> Press the <span class = 'key'>ENTER</span> key to begin </p>`,
         //the word “space” and the letters “F” and “J” should use CSS and the span element to look like keys
-        choices: [' ']
+        choices: ['Enter']
     };
     timeline.push(instructionsPage);
     number++;
