@@ -31,8 +31,6 @@
 }
 
 
-
-
 .category1 {
     margin-right: 100px;
     margin-left: 100px;
@@ -81,4 +79,15 @@
     /* Remove extra padding */
     list-style-position: outside;
     /* Bullets outside */
+}
+
+.loader {
+    width: 48px;
+    height: 48px;
+    border: 5px solid #000;
+    border-bottom-color: transparent;
+    border-radius: 50%;
+    display: inline-block;
+    box-sizing: border-box;
+    animation: rotation 1s linear infinite;
 }

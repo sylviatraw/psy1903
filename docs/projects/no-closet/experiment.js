@@ -183,14 +183,15 @@ let resultsTrial = {
     choices: ['NO KEYS'],
     async: false,
     stimulus: `
-        <h1>Please wait...</h1>
+        <h1> Please wait...</h1 >
+        <span class='loader'></span>
         <p>We are saving the results of your inputs.</p>
         `,
     on_start: function () {
         //  ⭐ Update the following three values as appropriate ⭐
         let prefix = 'no-closet';
-        let dataPipeExperimentId = 'SzVuh0HavIsX';
-        let forceOSFSave = true;
+        let dataPipeExperimentId = 'UKOmlhbKicSb';
+        let forceOSFSave = false;
 
         // Filter and retrieve results as CSV data
         let results = jsPsych.data
@@ -228,6 +229,7 @@ let resultsTrial = {
         })
     }
 }
+
 timeline.push(resultsTrial);
 
 // Debrief
