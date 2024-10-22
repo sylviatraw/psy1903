@@ -42,3 +42,38 @@
     margin-top: 100px;
     font-size: 60px;
 }
+
+.instruction-box {
+    background-color: #f0f0f0;
+    /* Light gray background */
+    border-radius: 10px;
+    /* Rounded corners */
+    padding: 20px;
+    /* Space inside the box */
+    margin: 20px auto;
+    /* Center the box horizontally */
+    width: 80%;
+    /* Width of the box, adjust as needed */
+    max-width: 600px;
+    /* Maximum width of the box */
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+    /* Slight shadow */
+}
+
+.instruction-box ul {
+    list-style-type: disc;
+    /* Bulleted list */
+    padding-left: 20px;
+    /* Indent the list */
+    margin: 0;
+    /* Remove default margin */
+}
+
+.instruction-box li {
+    margin: 5px 0;
+    /* Space between list items */
+    padding-left: 0;
+    /* Remove extra padding */
+    list-style-position: outside;
+    /* Bullets outside */
+}

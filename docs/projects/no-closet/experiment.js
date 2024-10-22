@@ -23,10 +23,14 @@ let timeline = [];
 let welcomePage = {
     type: jsPsychHtmlKeyboardResponse,
     stimulus: `<h1>Welcome to our IAT </h1>
-    <p class = 'instruct'> In task 1 you will be asked to read a short story.
-    In task 2 you will be asked to categorize a series of words.
-    In task 3 you will answer a brief set of questions.</p>
-    <p class = 'welcomeInstruct'>Press the <span class = 'key'>SPACE</span> key to begin</p>`,
+   <div class="instruction-box">
+            <ul>
+                <li>In task 1 you will be asked to read a short story.</li>
+                <li>In task 2 you will be asked to categorize a series of words.</li>
+                <li>In task 3 you will answer a brief set of questions.</li>
+            </ul>
+        </div>
+    <p>Press the <span class = 'key'>SPACE</span> key to begin</p>`,
     //space needs to look like a key
     choices: [' ']
 };
