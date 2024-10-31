@@ -29,31 +29,38 @@ let conditionTrial1 = {
     button_html: (choice) => `<button><img class= 'image-size' src="${choice}painting.png" alt="${choice}"></button>`,
     on_start: function (data) {
         // Store the image order again for the second condition
-        data.imageOrder = imagesRandomized;
-    }
+        jsPsych.data.addProperties({ imageOrder: imagesRandomized });
+    },
+    data: {
+        collect: false,
+        imageSelected: null
+    },
+
+    on_finish: function () {
+        //console.log(jsPsych.data.getLastTrialData());
+    },
 }
 
 timeline.push(conditionTrial1);
 
+
 let viewTrial = {
-    on_start: function (data) {
-        let lastTrialData = jsPsych.data.getLastTrialData();
-        // Get the index of the button clicked
-        //data.imageSelected = lastTrialData.response; // Button index
-        data.imageOrder = lastTrialData.imageOrder;
-        data.imageSelected = lastTrialData.response; // Access the stored image order
-        console.log(data.imageOrder)
-    },
+    // Get the index of the button clicked
+    //data.imageSelected = lastTrialData.response; // Access the stored image order
     type: jsPsychHtmlKeyboardResponse,
     stimulus: function () {
-        let lastTrialData = jsPsych.data.getLastTrialData();
+        let = lastTrialData = jsPsych.data.getLastTrialData().trials[0];
+        //the above line works because it needed .trials[0] to tell it where to go. same for the below line.
+        let response = jsPsych.data.getLastTrialData().trials[0].response;
+        console.log(lastTrialData);
         // Get the index of the button clicked
         //data.imageSelected = lastTrialData.response; // Button index
-        // data.imageOrder = lastTrialData.imageOrder;
-        // data.imageSelected = lastTrialData.response; // Access the stored image order
+        //The following line messes everything up
+        //data.imageSelected = lastTrialData.response; // Access the stored image order
         // console.log(data.imageOrder)
-        let image = lastTrialData.imageOrder[lastTrialData.imageSelected];
+        let image = lastTrialData.imageOrder[response];
         //jsPsych.data.addProperties({ imageSelected: image });
+        //this.data.imageSelected = image;
         return `
     <p>You chose the below image: </p>
     <img class= 'image-size2' src='${image}painting.png'>
@@ -62,6 +69,14 @@ let viewTrial = {
     choices: [' '],
     data: {
         collect: true,
+    },
+    on_start: function (data) {
+        // Store imageOrder and imageSelected specific to this trial
+        let lastTrialData = jsPsych.data.getLastTrialData().trials[0];
+        let response = lastTrialData.response;
+        data.imageOrder = lastTrialData.imageOrder;
+        data.imageSelected = response;
+        //console.log("Trial-specific data:", jsPsych.data.getLastTrialData());
     }
 };
 
@@ -70,33 +85,42 @@ timeline.push(viewTrial);
 let conditionTrial2 = {
     type: jsPsychHtmlButtonResponse,
     stimulus: `
-    <p>Now please click on the other image on your screen. You will be able to view the image for as long as you would like.</p>
+    <p>Click on the image you would like to view. You will be able to view the image for as long as you would like.</p>
     `,
     choices: imagesRandomized,
     button_html: (choice) => `<button><img class= 'image-size' src="${choice}painting.png" alt="${choice}"></button>`,
     on_start: function (data) {
         // Store the image order again for the second condition
         data.imageOrder = imagesRandomized;
-    }
-}
+    },
+    data: {
+        imageOrder: imagesRandomized,
+    },
 
+    on_finish: function () {
+        //console.log(jsPsych.data.getLastTrialData());
+    },
+}
 timeline.push(conditionTrial2);
 
 let viewTrial2 = {
-    on_start: function (data) {
-        let lastTrialData = jsPsych.data.getLastTrialData();
-        // Get the index of the button clicked
-        data.imageOrder = lastTrialData.imageOrder;
-        data.imageSelected = lastTrialData.response; // Button index// Access the stored image order
-    },
+
+    // Get the index of the button clicked
+    //data.imageSelected = lastTrialData.response; // Access the stored image order
     type: jsPsychHtmlKeyboardResponse,
     stimulus: function () {
-        let lastTrialData = jsPsych.data.getLastTrialData();
+        let lastTrialData = jsPsych.data.getLastTrialData().trials[0];
+        //console.log(lastTrialData);
+        //the above line works because it needed .trials[0] to tell it where to go. same for the below line.
+        let response = jsPsych.data.getLastTrialData().trials[0].response;
         // Get the index of the button clicked
         //data.imageSelected = lastTrialData.response; // Button index
-        data.imageOrder = lastTrialData.imageOrder;
-        data.imageSelected = lastTrialData.response; // Access the stored image order
-        console.log(data.imageOrder)
+        //The following line messes everything up
+        //data.imageOrder = lastTrialData.imageOrder;
+        //data.imageSelected = lastTrialData.response; // Access the stored image order
+        // console.log(data.imageOrder)
+        let image = lastTrialData.imageOrder[response];
+        //this.data.imageSelected = image;
         return `
     <p>You chose the below image: </p>
     <img class= 'image-size2' src='${image}painting.png'>
@@ -105,10 +129,19 @@ let viewTrial2 = {
     choices: [' '],
     data: {
         collect: true,
-        imageOrder: imagesRandomized,
+    },
+    on_start: function (data) {
+        // Store imageOrder and imageSelected specific to this trial
+        let lastTrialData = jsPsych.data.getLastTrialData().trials[0];
+        let response = lastTrialData.response;
+        data.imageOrder = lastTrialData.imageOrder;
+        data.imageSelected = lastTrialData.imageOrder[response];
+
+        //console.log(lastTrialData);
     }
 };
-timeline.push(viewTrial2)
+
+timeline.push(viewTrial2);
 
 let resultsTrial = {
     type: jsPsychHtmlKeyboardResponse,
