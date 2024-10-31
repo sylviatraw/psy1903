@@ -17,6 +17,7 @@ let welcomeTrial = {
 timeline.push(welcomeTrial);
 //timeline.push(welcomeTrial);
 
+
 for (let condition of conditions) {
     let conditionTrial = {
         type: jsPsychHtmlKeyboardResponse,

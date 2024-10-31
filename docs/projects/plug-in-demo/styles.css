@@ -1,0 +1,21 @@
+.image-size {
+    width: 300px;
+    /* Set desired width */
+    height: auto;
+    /* Maintain aspect ratio */
+    /* OR use a fixed height */
+    /* height: 300px; */
+    /*object-fit: cover;*/
+    /* Ensures the image covers the area without distortion */
+}
+
+.image-size2 {
+    width: 500px;
+    /* Set desired width */
+    height: auto;
+    /* Maintain aspect ratio */
+    /* OR use a fixed height */
+    /* height: 300px; */
+    /*object-fit: cover;*/
+    /* Ensures the image covers the area without distortion */
+}

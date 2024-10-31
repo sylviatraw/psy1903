@@ -1,0 +1,163 @@
+let jsPsych = initJsPsych();
+
+let timeline = [];
+
+// Welcome
+let welcomeTrial = {
+    type: jsPsychHtmlKeyboardResponse,
+    stimulus: `
+    <h1>Welcome to our jsPsych Plugin Demo!</h1>
+    <p>In this experiment, you will have the opportunity to view two paintings, each for as long as you would like, before being asked to share your opinion of each painting. </p>
+    <p>Press SPACE to begin the first part.</p>
+    ` ,
+    choices: [' '],
+};
+
+timeline.push(welcomeTrial);
+
+
+let images = ['clothed', 'nude'];
+let imagesRandomized = initJsPsych().randomization.shuffle(images);
+
+
+let conditionTrial1 = {
+    type: jsPsychHtmlButtonResponse,
+    stimulus: `
+    <p>Click on the image you would like to view. You will be able to view the image for as long as you would like.</p>
+    `,
+    choices: imagesRandomized,
+    button_html: (choice) => `<button><img class= 'image-size' src="${choice}painting.png" alt="${choice}"></button>`,
+    on_start: function (data) {
+        // Store the image order again for the second condition
+        data.imageOrder = imagesRandomized;
+    }
+}
+
+timeline.push(conditionTrial1);
+
+let viewTrial = {
+    on_start: function (data) {
+        let lastTrialData = jsPsych.data.getLastTrialData();
+        // Get the index of the button clicked
+        //data.imageSelected = lastTrialData.response; // Button index
+        data.imageOrder = lastTrialData.imageOrder;
+        data.imageSelected = lastTrialData.response; // Access the stored image order
+        console.log(data.imageOrder)
+    },
+    type: jsPsychHtmlKeyboardResponse,
+    stimulus: function () {
+        let lastTrialData = jsPsych.data.getLastTrialData();
+        // Get the index of the button clicked
+        //data.imageSelected = lastTrialData.response; // Button index
+        // data.imageOrder = lastTrialData.imageOrder;
+        // data.imageSelected = lastTrialData.response; // Access the stored image order
+        // console.log(data.imageOrder)
+        let image = lastTrialData.imageOrder[lastTrialData.imageSelected];
+        //jsPsych.data.addProperties({ imageSelected: image });
+        return `
+    <p>You chose the below image: </p>
+    <img class= 'image-size2' src='${image}painting.png'>
+<p>Press the SPACE key to go back to the previous screen</p>`
+    },
+    choices: [' '],
+    data: {
+        collect: true,
+    }
+};
+
+timeline.push(viewTrial);
+
+let conditionTrial2 = {
+    type: jsPsychHtmlButtonResponse,
+    stimulus: `
+    <p>Now please click on the other image on your screen. You will be able to view the image for as long as you would like.</p>
+    `,
+    choices: imagesRandomized,
+    button_html: (choice) => `<button><img class= 'image-size' src="${choice}painting.png" alt="${choice}"></button>`,
+    on_start: function (data) {
+        // Store the image order again for the second condition
+        data.imageOrder = imagesRandomized;
+    }
+}
+
+timeline.push(conditionTrial2);
+
+let viewTrial2 = {
+    on_start: function (data) {
+        let lastTrialData = jsPsych.data.getLastTrialData();
+        // Get the index of the button clicked
+        data.imageOrder = lastTrialData.imageOrder;
+        data.imageSelected = lastTrialData.response; // Button index// Access the stored image order
+    },
+    type: jsPsychHtmlKeyboardResponse,
+    stimulus: function () {
+        let lastTrialData = jsPsych.data.getLastTrialData();
+        // Get the index of the button clicked
+        //data.imageSelected = lastTrialData.response; // Button index
+        data.imageOrder = lastTrialData.imageOrder;
+        data.imageSelected = lastTrialData.response; // Access the stored image order
+        console.log(data.imageOrder)
+        return `
+    <p>You chose the below image: </p>
+    <img class= 'image-size2' src='${image}painting.png'>
+<p>Press the SPACE key to go back to the previous screen</p>`
+    },
+    choices: [' '],
+    data: {
+        collect: true,
+        imageOrder: imagesRandomized,
+    }
+};
+timeline.push(viewTrial2)
+
+let resultsTrial = {
+    type: jsPsychHtmlKeyboardResponse,
+    choices: [' '],
+    async: false,
+    stimulus: `
+        <h1>Please wait...</h1>
+        <span class='loader'></span>
+        <p>We are saving the results of your inputs.</p>
+        `,
+    on_start: function () {
+
+        // Filter and retrieve results as CSV data
+        let results = jsPsych.data
+            .get()
+            .filter({ collect: true })
+            .ignore(['stimulus', 'trial_type', 'plugin_version', 'collect'])
+            .csv();
+
+        console.log(results);
+
+        let prefix = 'plugin-demo';
+        let dataPipeExperimentId = 'xGrIMXyGYhic';
+        let forceOSFSave = false;
+        let participantId = getCurrentTimestamp();
+        let fileName = prefix + '-' + participantId + '.csv';
+
+        saveResults(fileName, results, dataPipeExperimentId, forceOSFSave).then(response => {
+            jsPsych.finishTrial();
+        })
+
+    }
+}
+timeline.push(resultsTrial);
+
+let debriefTrial = {
+    type: jsPsychHtmlKeyboardResponse,
+    stimulus: `
+    <h1>Thank you!</h1>
+    <p>The experiment is now complete; You may now close this tab</p>
+    `,
+    choices: ['NO KEYS'],
+};
+
+timeline.push(debriefTrial);
+
+jsPsych.run(timeline);
+
+function getRandomNumber(min, max) {
+    let randomNumber = Math.floor(Math.random() * ((max - min) + 1) + min);
+    return randomNumber;
+};
