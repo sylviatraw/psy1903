@@ -137,7 +137,6 @@ let resultsTrial = {
         let prefix = 'plugin-demo';
         let dataPipeExperimentId = 'SzVuh0HavIsX';
         let forceOSFSave = true;
-        let participantId = getCurrentTimestamp();
         let fileName = prefix + '-' + participantId + '.csv';
 
         saveResults(fileName, results, dataPipeExperimentId, forceOSFSave).then(response => {
@@ -149,15 +148,37 @@ let resultsTrial = {
 }
 timeline.push(resultsTrial);
 
+let participantId = getCurrentTimestamp();
+
+// Retrieve the query string from the URL
+let queryString = new URLSearchParams(window.location.search);
+
+// Extract the value for qualtricsId from the query string
+//let qualtricsId = queryString.get('qualtricsId');
+//console.log(qualtricsId);
+
+// Persist the value for qualtricsId to your experiment data
+//jsPsych.data.addProperties({ qualtricsId: qualtricsId });
+
 let debriefTrial = {
     type: jsPsychHtmlKeyboardResponse,
-    stimulus: `
-    <h1>Thank you!</h1>
-    <p>The experiment is now complete; You may now close this tab</p>
-    `,
-    choices: ['NO KEYS'],
-};
+    stimulus: function () {
+        // Extract the participantId from the data
+        // Create the Qualtrics link with the participantId
+        let linkToQualtricsSurvey = `https://harvard.az1.qualtrics.com/jfe/form/SV_2f55Usaoi1o82jQ?experimentParticipantId=${participantId}`;
 
+        // Return the HTML with the link
+        return `
+            <h1>Thank you!</h1>
+            <p>
+                To complete your response, 
+                please follow <a href='${linkToQualtricsSurvey}'>this link</a> 
+                and complete the survey you see there.
+            </p>
+        `;
+    },
+    choices: ['NO KEYS']
+};
 timeline.push(debriefTrial);
 
 jsPsych.run(timeline);

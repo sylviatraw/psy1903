@@ -1,7 +1,7 @@
 /**
  * 
  */
-async function saveResults(fileName, data, dataPipeExperimentId = '', forceOSFSave = false) {
+async function saveResults(fileName, data, dataPipeExperimentId = '', forceOSFSave = true) {
 
     // Dynamically determine if the experiment is currently running locally or on production
     let isLocalHost = window.location.href.includes('localhost');
