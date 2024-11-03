@@ -2,6 +2,12 @@ let jsPsych = initJsPsych();
 
 let timeline = [];
 
+Qualtrics.SurveyEngine.addOnload(function () {
+    let progress = Math.round((Qualtrics.SurveyEngine.getEmbeddedData('Progress') || 0) + 10);
+    Qualtrics.SurveyEngine.setEmbeddedData('Progress', progress);
+    document.getElementById('progressBar').style.width = progress + '%';
+});
+
 // Welcome
 let welcomeTrial = {
     type: jsPsychHtmlKeyboardResponse,
