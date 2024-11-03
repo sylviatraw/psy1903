@@ -1,12 +1,10 @@
-let jsPsych = initJsPsych();
+let jsPsych = initJsPsych({
+    show_progress_bar: true
+});
 
 let timeline = [];
 
-Qualtrics.SurveyEngine.addOnload(function () {
-    let progress = Math.round((Qualtrics.SurveyEngine.getEmbeddedData('Progress') || 0) + 10);
-    Qualtrics.SurveyEngine.setEmbeddedData('Progress', progress);
-    document.getElementById('progressBar').style.width = progress + '%';
-});
+let participantId = getCurrentTimestamp();
 
 // Welcome
 let welcomeTrial = {
@@ -154,7 +152,6 @@ let resultsTrial = {
 }
 timeline.push(resultsTrial);
 
-let participantId = getCurrentTimestamp();
 
 // Retrieve the query string from the URL
 let queryString = new URLSearchParams(window.location.search);
@@ -183,7 +180,10 @@ let debriefTrial = {
             </p>
         `;
     },
-    choices: ['NO KEYS']
+    choices: ['NO KEYS'],
+    on_start: function () {
+        jsPsych.progressBar.progress = 1;
+    }
 };
 timeline.push(debriefTrial);
 
