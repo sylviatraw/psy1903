@@ -1,5 +1,7 @@
 // Initialize the jsPsych library
-let jsPsych = initJsPsych();
+let jsPsych = initJsPsych({
+    show_progress_bar: true
+});
 
 // Define the timeline as an empty array where we will add all our trials
 let timeline = [];
@@ -14,9 +16,9 @@ let welcomePage = {
                 <li>In task 3 you will answer a brief set of questions.</li>
             </ul>
         </div>
-    <p>Press the <span class = 'key'>SPACE</span> key to begin</p>`,
+    <p>Press the <span class = 'key'>ENTER</span> key to begin</p>`,
     //space needs to look like a key
-    choices: [' ']
+    choices: ['Enter']
 };
 
 timeline.push(welcomePage);
@@ -55,10 +57,10 @@ let primingTrial = {
     type: jsPsychHtmlKeyboardResponse,
     stimulus: `
         <h1>Task 1 of 3</h1>
-        <p class = 'instructPerTask'> Please read the following story. When you are done, press the <span class = 'key'>ENTER</span> key to move to the next task. </p>
+        <p class = 'instructPerTask'> Please read the following story. When you are done, press the <span class = 'key'>SPACE</span> key to move to the next task. </p>
         <p> ${primer.story}
         `,
-    choices: ['Enter'],
+    choices: [' '],
     data: {
         collect: true,
         whichPrime: primer.title,
@@ -72,9 +74,9 @@ let iatWelcome = {
     type: jsPsychHtmlKeyboardResponse,
     stimulus: `<h1> Task 2 of 3</h1>
     <p class= 'instructPerTask'> In this final task, you will be shown a series of words and asked to sort them into categories.</p>
-    <p> Press the <span class = 'key'>SPACE</span> key to begin. </p> 
+    <p> Press the <span class = 'key'>ENTER</span> key to begin. </p> 
     `, //space needs to have key  around it 
-    choices: [' '],
+    choices: ['Enter'],
 };
 
 timeline.push(iatWelcome);
@@ -91,9 +93,9 @@ for (let block of conditions) {
         <p> In this part the two categories will be: <strong>${leftCategory}</strong> and <strong>${rightCategory}</strong></p>
         <p> If the word you see in the middle of the screen should be sorted into the <strong>${leftCategory}</strong> press the <span class = 'key'>F</span> key.</p>
         <p> If the word should be sorted into the <strong>${rightCategory}</strong> press the <span class = 'key'>J</span> key.</p>
-        <p> Press the <span class = 'key'>ENTER</span> key to begin </p>`,
+        <p> Press the <span class = 'key'>SPACE</span> key to begin </p>`,
         //the word “space” and the letters “F” and “J” should use CSS and the span element to look like keys
-        choices: ['Enter']
+        choices: [' ']
     };
     timeline.push(instructionsPage);
     number++;
@@ -247,6 +249,7 @@ let debriefTrial = {
             .ignore(['stimulus', 'trial_type', 'trial_index', 'plugin_version', 'collect'])
             .csv();
         console.log(data);
+        jsPsych.progressBar.progress = 1;
     }
 }
 timeline.push(debriefTrial);
