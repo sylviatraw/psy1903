@@ -12,7 +12,7 @@ let blocksB = [
 // There should be 10 words per category
 let words = {
     'LGBTQ+': ['Bisexual', 'Pansexual', 'Nonbinary', 'Queerness', 'Genderqueer', 'Transgender', 'Fluidity', 'Inclusivity', 'Diversity', 'Androgynous'],
-    Cishet: ['Straight', 'Cisgendered', 'Heterosexual', 'Heteronormative', 'Cissexual', 'Hetero', 'Vanilla', 'Conformity', 'Traditional', 'Biological'],
+    Cishet: ['Straight', 'Cisgendered', 'Heterosexual', 'Heteronormative', 'Cissexual', 'Hetero', 'Usual', 'Conformity', 'Traditional', 'Biological'],
     'Mental illness': ['Depression', 'Anorexia', 'Schizophrenia', 'Anxiety', 'Psychosis', 'Autism', 'Bipolar Disorder', 'Panic Disorder', 'OCD', 'PTSD'],
     'Physical illness': ['Pneumonia', 'Arthritis', 'Diabetes', 'Asthma', 'Migraine', 'Epilepsy', 'Leukemia', 'Meningitis', 'Influenza', 'Common Cold'],
 };
@@ -23,7 +23,7 @@ let words = {
 // when developing your experiment you can reduce this number
 // to expedite the process of testing the experiment
 // Always set the count to an even number
-let count = 4;
+let count = 36;
 
 
 
