@@ -9,7 +9,7 @@ setwd("C:/Users/sylvi/Documents/psy1903/stats/data_cleaning/scripts")
 require("pacman")
 p_load("tidyverse","rstudioapi","lme4","emmeans","psych","corrplot", "jsonlite")
 
-iat_data <- read.csv("../../../osfstor`age-archive/no-closet-2024-11-05-21-47-34.csv")
+iat_data <- read.csv("../../../osfstorage-archive/no-closet-2024-11-05-21-47-34.csv")
 
 iat_data2 <- iat_data[iat_data$expectedCategoryAsDisplayed == "Physical illness or LGBTQ+" |
                          iat_data$expectedCategoryAsDisplayed == "Mental illness or Cishet" |
@@ -43,7 +43,7 @@ calculate_iat_dscore <- function (data) {
   congruent_means <- mean(congruent_trials$rt, na.rm = TRUE)
   incongruent_means <- mean(incongruent_trials$rt, na.rm = TRUE)
   pooled_sd <- sd(c(congruent_trials$rt, incongruent_trials$rt), na.rm = TRUE)
-  dscore <- (congruent_means - incongruent_means) / pooled_sd
+  dscore <- (incongruent_means - congruent_means) / pooled_sd
   return(dscore)
 }
 
@@ -121,3 +121,119 @@ write.csv(dscores,"C:\\Users\\sylvi\\Documents\\psy1903\\stats\\data_cleaning\\d
 
 myIAT_data <- read.csv("C:\\Users\\sylvi\\Documents\\psy1903\\stats\\data_cleaning\\data\\participant_dscores.csv")
 view(myIAT_data)
+?hist
+hist(dscores$d_score,
+     breaks = 30,
+     xlim = c(-0.5, 1.5),
+     col = "skyblue",
+     main = "Distribution of D-Scores",
+     xlab = "D-Scores",
+     ylab = "Frequency")
+
+boxplot(dscores$d_score ~ dscores$whichPrime)
+
+plot(density(dscores$questionnaire))
+
+density: (dscores$d_score ~ dscores$whichPrime)
+
+require(ggplot2)
+
+qplot(x = whichPrime,
+      y = d_score,
+      data = dscores,
+      color = questionnaire,
+      xlab = "Prime Shown",
+      ylab = "Dscore",
+      main = "Primer vs. Dscores")
+
+ggplot(data=dscores,
+       aes(x = d_score)) + 
+  geom_histogram(fill = "skyblue",
+                 col = "black",
+                 binwidth = 0.1) + xlim(-0.5,1.5)+
+                 labs(title = "Distribution of D-Scores",
+                      x = "D-Score",
+                      y = "Frequency")+
+                 theme_minimal()
+
+ggplot(data=dscores,
+       aes(x = d_score)) + 
+  geom_histogram(aes(fill = whichPrime),
+                 col = "black",
+                 binwidth = 0.1,
+                 show.legend = FALSE) + xlim(-0.5,1.5)+
+  labs(title = "Distribution of D-Scores",
+       x = "D-Scores",
+       y = "Frequency")+
+  theme_classic()+
+  facet_wrap(facets = dscores$whichPrime)
+
+ggplot(data=dscores, aes(x= whichPrime, y = d_score)) +
+  geom_boxplot(outlier.shape=1, aes(fill = whichPrime))+
+  labs(title = "Effect of Prime on D-Scores",
+       x = "Prime Condition",
+       y = "D-Score")+
+  theme_classic()+
+  theme(legend.position = "none")+
+  scale_x_discrete(labels=c("CisHet"="CisHet", "Control"="Control", "Queer"="Queer"))
+
+ggplot(data = dscores, aes(x=questionnaire, y=d_score)) +
+  geom_point()+
+  theme_classic()+
+  labs(title = "Correlation Between Questionnaire and D-Scores",
+       x = "Questionnaire",
+       y= "D-Scores")+
+  geom_smooth(method=lm)
+
+ggplot (data=dscores, aes(x=questionnaire)) +
+  
+  geom_bar(aes(fill=whichPrime),
+           color = "black",
+           position= "dodge")+
+  xlim(0,2.5)
+
+ggplot(data= dscores, aes(x=d_score))+
+  xlim(-2,2)+
+  
+  geom_density(positions="stack",
+               aes(fill=whichPrime),
+               alpha = 0.5)
+
+myIAT_anova <- aov(dscores$d_score ~ dscores$whichPrime)  
+
+summary(myIAT_anova)
+
+post_hoc_test <- pairwise.t.test(dscores$d_score,
+                dscores$whichPrime,
+                p.adj = "none")
+summary(post_hoc_test)
+
+TukeyHSD(myIAT_anova)
+
+myIAT_cor <- cor.test(dscores$questionnaire, dscores$d_score)
+
+
+ggplot(data=dscores, aes(x= whichPrime, y = d_score))+
+  
+  geom_boxplot(outlier.shape = 3, aes(fill = whichPrime), 
+               coef = 3,
+               size = 1.25,
+               color = "black",  
+               outlier.size = 3)+
+  labs(title = "Effect of Prime on D-Scores",
+       x = "Prime Condition",
+       y = "D-Score")+
+  scale_x_discrete(labels=c("CisHet"="CisHet", "Control"="Control", "Queer"="Queer"))+
+  theme(legend.position = "none", 
+        plot.title = element_text(size = rel(2), face = "bold", hjust = 0.5),
+        axis.title.x = element_text(size = rel(1.5), face = "bold"),
+        axis.title.y = element_text(size = rel(1.5), face = "bold"),
+        axis.text.x = element_text(size = rel(1.5)),
+        panel.background = element_rect(fill = "white"),
+        panel.grid.major = element_line(color = "lightgray", size = 0.5),
+        panel.grid.minor = element_line(color = "lightgray", size = 0.25),
+        axis.line = element_line(color = "black", size = 0.5))
+
+
+
+
