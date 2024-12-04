@@ -212,6 +212,7 @@ TukeyHSD(myIAT_anova)
 
 myIAT_cor <- cor.test(dscores$questionnaire, dscores$d_score)
 
+myIAT_cor
 
 ggplot(data=dscores, aes(x= whichPrime, y = d_score))+
   
@@ -234,6 +235,28 @@ ggplot(data=dscores, aes(x= whichPrime, y = d_score))+
         panel.grid.minor = element_line(color = "lightgray", size = 0.25),
         axis.line = element_line(color = "black", size = 0.5))
 
+result <- t.test(dscores$d_score, mu = 0) 
+##mu = 0: The null hypothesis value to test against (0 in this case).
 
+result$p.value  # Extract the p-value 
+result$conf.int # Extract the confidence interval
+
+ggplot(data=dscores,
+       aes(x = d_score)) + 
+  geom_histogram(fill = "skyblue",
+                 col = "black",
+                 binwidth = 0.05) + xlim(-0.5,1.5)+
+  labs(title = "Distribution of D-Scores",
+       x = "D-Score",
+       y = "Frequency")+
+  theme_minimal()
+
+
+ggplot(data=dscores, aes(y = d_score)) +
+  geom_boxplot(outlier.shape=1, fill = "skyblue")+
+  labs(title = "Distribution of D-Scores",
+       y = "D-Score")+
+  theme_classic()+
+  theme(legend.position = "none")
 
 
