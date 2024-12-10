@@ -134,7 +134,7 @@ boxplot(dscores$d_score ~ dscores$whichPrime)
 
 plot(density(dscores$questionnaire))
 
-density: (dscores$d_score ~ dscores$whichPrime)
+##density: (dscores$d_score ~ dscores$whichPrime)
 
 require(ggplot2)
 
@@ -145,6 +145,7 @@ qplot(x = whichPrime,
       xlab = "Prime Shown",
       ylab = "Dscore",
       main = "Primer vs. Dscores")
+
 
 ggplot(data=dscores,
        aes(x = d_score)) + 
@@ -192,12 +193,40 @@ ggplot (data=dscores, aes(x=questionnaire)) +
            position= "dodge")+
   xlim(0,2.5)
 
+custom_colors <- c("Queer" = "#cfea00", "Control" = "#ff8a00", "CisHet" = "#2100ef")
+
+
 ggplot(data= dscores, aes(x=d_score))+
-  xlim(-2,2)+
+  xlim(-0.5,1.25)+
+  ylim(0, 1.6)+
   
-  geom_density(positions="stack",
-               aes(fill=whichPrime),
-               alpha = 0.5)
+  geom_density(aes(fill=whichPrime, color = whichPrime), alpha = 0.8) +
+  scale_fill_manual(values = custom_colors) +  # Custom fill colors
+  scale_color_manual(values = custom_colors)+
+  geom_bar(fill = "lightblue", color = "green", alpha = 0.8) + 
+  geom_point(aes(y = questionnaire),color = "red", size = 3)+
+  labs(title = "C̸͉̿͂ô̵͖̈r̵̯̼̓r̴͕̦͝e̵͉̊l̷̡͑̈́å̷̩̲ţ̷̔ȉ̷͇͇̈́o̶̳̊̀n̴̬͖͐̔ ̷͎̫̓͗B̵̞̐ë̸̝́̒ṯ̷́͊w̷̞̄̉͜ë̵̼͇́̕e̷̖̼̒n̷̤͍͑̾ ̸͙̰̓Q̸̦̃͊u̶͉̮͝e̷̡̜͛͑s̷̘̋t̸̘͓̊͝į̸̓̈ô̸͙͂n̶̬̘̿n̸̏ͅa̴̢̛̮͊ỉ̸͖̣͝r̶̙̿̀e̵̦̔ ̵̪̥͊ā̴̢̗n̶̤̮̅̕d̶̳͇̓̈́ ̷̙̲͒D̶̲͘̚-̵͇̝̋̇S̸͙̀c̴̯͍̽͠o̴̗̕r̸͔̪̕e̷̥͆̎s̵̫̘͑",
+       x = "Questionnaire",
+       y= "D-Scores")+
+  geom_smooth(aes(y = questionnaire, x = d_score), method = "lm", color = "blue", fill = "#660039")+
+  geom_point(aes(y = questionnaire),color = "blue", size = 1.2)+
+  geom_bar(aes(fill=whichPrime,
+           color = whichPrime),
+           position= "dodge")+
+  scale_fill_manual(values = custom_colors) +  # Custom fill colors
+  scale_color_manual(values = custom_colors)+
+  theme(legend.position = "none", 
+      plot.title = element_text(size = rel(2), face = "bold", hjust = 0.5),
+      axis.title.x = element_text(size = rel(1.5), face = "bold"),
+      axis.title.y = element_text(size = rel(1.5), face = "bold"),
+      axis.text.x = element_text(size = rel(1.5)),
+      panel.background = element_rect(fill = "#9abe3c"),
+      panel.grid.major = element_line(color = "yellow", size = 0.5),
+      panel.grid.minor = element_line(color = "red", size = 0.25),
+      axis.line = element_line(color = "black", size = 0.5),
+      plot.background = element_rect(fill = "#ff4f00"))
+  
+?legend.position
 
 myIAT_anova <- aov(dscores$d_score ~ dscores$whichPrime)  
 
@@ -258,5 +287,11 @@ ggplot(data=dscores, aes(y = d_score)) +
        y = "D-Score")+
   theme_classic()+
   theme(legend.position = "none")
+
+ggplot(data, aes(x = x)) +
+  geom_histogram(binwidth = 0.5, fill = "lightblue", color = "black", alpha = 0.6) + # Histogram
+  geom_point(aes(y = y), color = "red", size = 2) +                                # Scatterplot
+  labs(title = "Scatterplot Over Histogram", x = "X-axis", y = "Count / Y-axis") +
+  theme_minimal()
 
 
